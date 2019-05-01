@@ -14,6 +14,7 @@
 
 use protobuf::Message;
 use protobuf::RepeatedField;
+use std::default::Default;
 
 use std::error::Error as StdError;
 
@@ -32,6 +33,12 @@ pub enum DataType {
     Enum,
     Struct,
     LatLong,
+}
+
+impl Default for DataType {
+    fn default() -> DataType {
+        DataType::Bytes
+    }
 }
 
 impl FromProto<protos::schema_state::PropertyDefinition_DataType> for DataType {
@@ -72,7 +79,7 @@ impl FromNative<DataType> for protos::schema_state::PropertyDefinition_DataType 
 impl IntoProto<protos::schema_state::PropertyDefinition_DataType> for DataType {}
 impl IntoNative<DataType> for protos::schema_state::PropertyDefinition_DataType {}
 
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Default, Debug, Clone, PartialEq)]
 pub struct LatLong {
     latitude: i64,
     longitude: i64,
@@ -110,7 +117,7 @@ impl IntoProto<protos::schema_state::LatLong> for LatLong {}
 impl IntoNative<LatLong> for protos::schema_state::LatLong {}
 
 /// Native implementation of PropertyDefinition
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Default, Debug, Clone, PartialEq)]
 pub struct PropertyDefinition {
     name: String,
     data_type: DataType,
@@ -677,7 +684,7 @@ impl SchemaListBuilder {
 }
 
 /// Native implementation of PropertyValue
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Default, Debug, Clone, PartialEq)]
 pub struct PropertyValue {
     name: String,
     data_type: DataType,
